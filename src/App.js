@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Fragment } from 'react';
 import './App.css';
+import Dashboard from "./containers/Dashboard/Dashboard";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
+import SignIn from './containers/SignIn/SignIn';
+
+import fakeAuth from './auth';
+import Playbook from './containers/Playbook/Playbook';
+
+const PrivateRoute = (props) => (
+  <Fragment>
+      { fakeAuth.isAuthenticated ? props.children : <Redirect to={{ pathname: "/signin" }} /> }
+  </Fragment>
+)
+
+fakeAuth.isAuthenticated = true;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>      
+         <Switch>
+         <Route exact path="/signin" component={SignIn} />
+         <Route exact path="/playbook" component={Playbook} />
+            <PrivateRoute>
+              <Route path="/dashboard" component={Dashboard} />
+              <Redirect exact path="/" to="/dashboard" />
+            </PrivateRoute>
+        </Switch>
+    </Router>
+
   );
 }
 
