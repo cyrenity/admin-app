@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { makeStyles, TextField, Button } from '@material-ui/core';
-import { addContact } from "../actions/contacts";
+import { addContact } from "../../../actions/contacts";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -93,7 +93,7 @@ const ContactForm = (props) => {
 const mapDispatchToProps = (dispatch) => {
     return {
       dispatch,
-        addContact: (payload) => { dispatch(addContact(payload)) }
+      addContact: (payload) => { dispatch(addContact(payload)) }
     }
   }
 
